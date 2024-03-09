@@ -105,13 +105,13 @@ public class LinkedList <T> implements Iterable<T> {
             head = newNode;
         } else {
             Node<T> current = head;
-            for(int i = 0; i < index; i++){
+            for(int i = 0; i < index - 1; i++){
                 current = current.next;
             }
-            newNode.next = current.next.next;
+            newNode.next = current.next;
             current.next = newNode;
-            size++;
         }
+        size++;
     }
 
     // Example:  If the list is 1 → 2 → 3 → 4, and remove(2) is invoked,
@@ -119,7 +119,7 @@ public class LinkedList <T> implements Iterable<T> {
 
     public void remove(int index){
         if(index < 0 || index > size){
-            throw new IndexOutOfBoundsException("Index out of bounds!");
+            throw new NullPointerException("Index out of bounds!");
         }
         if(index == 0){
             head = head.next;
