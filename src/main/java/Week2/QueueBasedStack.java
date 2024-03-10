@@ -1,34 +1,42 @@
 package Week2;
 
-public class QueueBasedStack<Data> {
-    private Queue<Data> q1;
-    private Queue<Data> q2;
+public class QueueBasedStack<T> {
+    private Queue<T> q1;
+    private Queue<T> q2;
 
     public QueueBasedStack() {
-        // your code here
+        q1 = new Queue<T>();
+        q2 = new Queue<T>();
     }
 
-    public void push(Data data) {
-        // your code here
+    //To add a new element to the stack → push():
+    //Add the element to q2.
+    //One by one, remove all elements from q1 and add them to q2.
+    //Swap the queues q1 and q2.
+    public void push(T data) {
+        q2.enqueue(data);
+        while(!q1.isEmpty()){
+            q2.enqueue(q1.dequeue());
+        }
+        Queue<T> tempQueue = new Queue<>();
+        tempQueue = q1;
+        q1 = q2;
+        q2 = tempQueue;
     }
 
-    public Data pop() {
-        // your code here (remove next line)
-        return null;
+    public T pop() {
+        return q1.dequeue();
     }
 
-    public Data peek() {
-        // your code here (remove next line)
-        return null;
+    public T peek() {
+        return q1.peek();
     }
 
     public int size() {
-        // your code here (remove next line)
-        return 0;
+        return q1.size();
     }
 
     public boolean isEmpty() {
-        // your code here (remove next line)
-        return false;
+        return q1.isEmpty();
     }
 }
