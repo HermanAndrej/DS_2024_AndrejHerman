@@ -1,48 +1,82 @@
 package homework1;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 public class PhonebookV1 {
     public static void main(String[] args) throws IOException {
         System.out.println("Loading the entries...");
-        List<Entry> entries = List.of(FileUtils.readFile("C:\\Users\\andre\\DS_2024_AndrejHerman\\DS_2024_AndrejHerman\\src\\main\\java\\homework1\\raw_phonebook_data.csv"));
-        Entry[] entryArray = entries.toArray(new Entry[0]);
+        Entry[] entries = FileUtils.readFile("");
 
-        System.out.println("Sorting the entries...");
-        MergeSort.sort(entryArray);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Choose the attribute to sort by:");
+        System.out.println("1. Name");
+        System.out.println("2. Street Address");
+        System.out.println("3. City");
+        System.out.println("4. Postcode");
+        System.out.println("5. Country");
+        System.out.println("6. Phone Number");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+
+        String sortAttribute = "";
+        switch (choice) {
+            case 1:
+                sortAttribute = "name";
+                break;
+            case 2:
+                sortAttribute = "streetaddress";
+                break;
+            case 3:
+                sortAttribute = "city";
+                break;
+            case 4:
+                sortAttribute = "postcode";
+                break;
+            case 5:
+                sortAttribute = "country";
+                break;
+            case 6:
+                sortAttribute = "phonenumber";
+                break;
+            default:
+                System.out.println("Invalid choice. Defaulting to sort by name.");
+                sortAttribute = "name";
+                break;
+        }
+
+        System.out.println("Sorting the entries by " + sortAttribute + "...");
+        MergeSort.sort(entries, Entry.getComparator(sortAttribute));
 
         System.out.println("Writing entries to a file...");
-        FileUtils.writeToFile(entryArray, "sorted_phonebook.csv");
+        FileUtils.writeToFile(entries, "sorted_phonebook.csv");
 
         System.out.println("=========================== \n" + "System is ready to use!");
 
-        Scanner scanner = new Scanner(System.in);
-        while(true){
-            System.out.print("Enter the name to search (format: 'Surname, Name'), or -1 to exit: \n");
-            String searchableName = scanner.nextLine();
+        while (true) {
+            System.out.print("Enter the value to search for " + sortAttribute + ", or -1 to exit: \n");
+            String searchableValue = scanner.nextLine();
 
-            if(searchableName.equals("-1")){
+            if (searchableValue.equals("-1")) {
                 System.out.println("Exiting the program...");
                 break;
             }
 
-            int[] result = BinarySearch.search(entryArray, searchableName);
+            int[] result = BinarySearch.search(entries, searchableValue, sortAttribute);
             if (result.length == 0) {
-                System.out.println("No entries found for the given name.");
+                System.out.println("No entries found for the given " + sortAttribute + ".");
             } else {
                 int numOfEntries = result[1] - result[0] + 1;
                 System.out.println(numOfEntries + " entries found.");
                 System.out.println("Entries found from index " + result[0] + " to " + result[1] + "\n");
                 for (int i = result[0]; i <= result[1]; i++) {
-                    System.out.println(entryArray[i] + "\n");
+                    System.out.println(entries[i] + "\n");
                 }
             }
-
         }
 
         scanner.close();
-
     }
 }
