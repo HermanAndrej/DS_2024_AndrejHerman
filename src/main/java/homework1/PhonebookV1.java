@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class PhonebookV1 {
     public static void main(String[] args) throws IOException {
         System.out.println("Loading the entries...");
-        Entry[] entries = FileUtils.readFile("");
+        Entry[] entries = FileUtils.readFile("raw_phonebook_data.csv");
 
         Scanner scanner = new Scanner(System.in);
 
