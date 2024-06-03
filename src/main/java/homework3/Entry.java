@@ -21,6 +21,26 @@ public class Entry implements Comparable<Entry> {
         return name;
     }
 
+    public String getStreetAddress(){
+        return streetAddress;
+    }
+
+    public String getCity(){
+        return city;
+    }
+
+    public String getPostcode(){
+        return postcode;
+    }
+
+    public String getCountry(){
+        return country;
+    }
+
+    public String getPhoneNumber(){
+        return this.phoneNumber;
+    }
+
     @Override
     public int compareTo(Entry other) {
         return this.name.compareTo(other.name);

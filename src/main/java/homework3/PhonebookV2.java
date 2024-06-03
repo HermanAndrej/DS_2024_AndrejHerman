@@ -1,5 +1,6 @@
 package homework3;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -40,7 +41,11 @@ public class PhonebookV2 {
                 System.out.println("Entry not found.");
             }
         }
+            try {
+                tree.inorderTraversalAndSaveToFile("phonebook_data.csv");
+            } catch (IOException e) {
+                System.out.println("Error saving to file: " + e.getMessage());
+            }
+        }
 
-        scanner.close();
     }
-}

@@ -1,5 +1,7 @@
 package homework3;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class RedBlackTree {
@@ -23,7 +25,7 @@ public class RedBlackTree {
                 System.out.println("Black edges on the path: " + blackCount);
                 return x.values;
             }
-            if (isRed(x)) redCount++;
+            if (x != null && isRed(x)) redCount++;
         }
         return null;
     }
@@ -96,5 +98,25 @@ public class RedBlackTree {
             counts[x.right.color ? 1 : 0]++;
             countEdges(x.right, counts);
         }
+    }
+
+    public void inorderTraversalAndSaveToFile(String filePath) throws IOException {
+        FileWriter writer = new FileWriter(filePath);
+        inorderTraversalAndSaveToFile(root, writer);
+        writer.close();
+    }
+
+    private void inorderTraversalAndSaveToFile(Node node, FileWriter writer) throws IOException {
+        if (node == null) return;
+        inorderTraversalAndSaveToFile(node.left, writer);
+        for (Entry entry : node.values) {
+            writer.write(entry.getName() + ";" +
+                    entry.getStreetAddress() + ";" +
+                    entry.getCity() + ";" +
+                    entry.getPostcode() + ";" +
+                    entry.getCountry() + ";" +
+                    entry.getPhoneNumber() + "\n");
+        }
+        inorderTraversalAndSaveToFile(node.right, writer);
     }
 }
